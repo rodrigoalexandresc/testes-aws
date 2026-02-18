@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  sqs-consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - AWS__ServiceURL=http://host.docker.internal:4566
+      - AWS__Region=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - Queue__QueueUrl=http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/minha-fila
+    # depends_on:
+    #   - localstack
+    # networks:
+    #   - sqs-network
+
+#   localstack:
+#     image: localstack/localstack:latest
+#     ports:
+#       - "4566:4566"
+#     environment:
+#       - SERVICES=sqs
+#       - DEBUG=1
+#       - DATA_DIR=/tmp/localstack/data
+#       - DOCKER_HOST=unix:///var/run/docker.sock
+#     volumes:
+#       - "${TMPDIR:-.}/localstack:/tmp/localstack"
+#       - "/var/run/docker.sock:/var/run/docker.sock"
+#     networks:
+#       - sqs-network
+
+# networks:
+#   sqs-network:
+#     driver: bridge
